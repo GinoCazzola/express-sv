@@ -2,17 +2,22 @@
 import express from "express"
 
 import endpointRoute from "./src/routes/firstEndpoint.route.js"
-
+import { dbConection } from "./database/dbConection.js"
 
 const PORT = 4000
 
-const server = express()
+const appServer = async () => {
 
-server.use(express.json())
+      await dbConection()
 
-server.use("/api/endpoint", endpointRoute)
+      const server = express()
 
-server.listen(PORT, () => console.log("Server running successfully on port", PORT))
+      server.use(express.json())
 
+      server.use("/api/endpoint", endpointRoute)
 
+      server.listen(PORT, () => console.log("Server running successfully on port", PORT))
 
+}
+
+appServer()
