@@ -24,7 +24,7 @@ const appServer = async () => {
       server.use("/api/endpoint", endpointRoute)
       server.use("/api/auth", authRoutes)
 
-      server.listen(PORT, () => console.log("Server running successfully on port", PORT))
+      server.listen(process.env.PORT, () => console.log("Server running successfully on port", process.env.PORT))
 
 }
 
