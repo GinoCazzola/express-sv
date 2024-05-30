@@ -61,11 +61,15 @@ export const editUser = async (req, res) => {
     console.log(id)
 
     try {
-        const foundUser = await User.findById(id)
+        const foundUser = await User.findOne({
+            _id: id,
+            deletedAt: { $in: [null, undefined]}
+        })
+
 
         if (!foundUser) {
-            res.status(404)
-            .json({
+            return res.status(404)
+                .json({
                 ok: false,
                 msg: "No se ha encontrado el usuario a editar"
 
@@ -104,7 +108,7 @@ export const deleteUser = async (req, res) => {
         const foundUser = await User.findById(id)
     
             if (!foundUser) {
-                res.status(404)
+                return res.status(404)
                 .json({
                     ok: false,
                     msg: "No se ha encontrado el usuario a eliminar"
